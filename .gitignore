@@ -1,0 +1,30 @@
+# kovanica-mainnet — never commit operator secrets or runtime state.
+#
+# 1. PoA authority SIGNING keys (operator's 32-byte Ed25519 seed, mode 0600),
+#    referenced by the systemd units as `EnvironmentFile=`.
+#    `mainnet-authority-keys/authorities.conf` is PUBLIC (64-hex pubkeys +
+#    threshold) and IS tracked — it must stay in sync across operators.
+mainnet-authority-keys/*.env
+authority-keys/*.env
+
+# 2. Runtime state: ledger snapshots, replay logs, peer ban state, operator
+#    wallets and validator seeds.
+data/
+keys/
+logs/
+seeds/*/data/
+seeds/*/keys/
+*.log
+
+# 3. Any local env/secret, repo-wide.
+.env
+.env.*
+!.env.example
+
+# 4. Editor / OS noise.
+*.backup
+*.bak
+*.swp
+.DS_Store
+__pycache__/
+*.pyc
